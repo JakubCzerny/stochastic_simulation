@@ -5,7 +5,6 @@ import scipy as sp
 from scipy import stats
 import math
 
-
 def monte_carlo(n, f, alpha=0.05):
     rvs = [random.random() for i in range(n)]
     x  = [f(r) for r in rvs]
