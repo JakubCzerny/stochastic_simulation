@@ -1,4 +1,4 @@
-from integration import monte_carlo, antithetic_variables, control_variates, stratified_sampling
+from variance_reduction import monte_carlo, antithetic_variables, control_variates, stratified_sampling
 import math
 
 def f_exp(x):
