@@ -1,6 +1,7 @@
 from simulated_annealing import SA_coordinates, SA_distances
 import random
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def get_coordinates(D):
@@ -15,7 +16,7 @@ def get_coordinates(D):
 
 # ================================================== COORDINATES ============================================================
 # x = [(1,2), (5,1), (8,3), (1,9), (12,7), (41,26), (50,30), (60,25), (55,27), (30,30)]
-x = [(random.random(),random.random()) for i in range(20)]
+x = [(random.random(),random.random()) for i in range(30)]
 t0 = 400
 max_time = 30
 SA = SA_coordinates(t0, x, max_time)
@@ -27,6 +28,7 @@ print 'Number of iterations: ', SA.iterations
 print 'Final temperature: ', SA.t
 SA.display('initial')
 SA.display('final')
+plt.show()
 # ===========================================================================================================================
 
 

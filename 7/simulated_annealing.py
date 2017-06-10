@@ -41,11 +41,10 @@ class SA_coordinates(object):
             print 'The coordinates are not 2D'
         else:
             route = self.intial_route if solution=='initial' else self.route
-
+            plt.figure()
             for i in range(self.n-1):
                 plt.plot([route[i][0], route[i+1][0]],[route[i][1], route[i+1][1]])
             plt.plot([route[self.n-1][0], route[0][0]],[route[self.n-1][1], route[0][1]])
-            plt.show()
 
 
     def random_swap(self):
@@ -90,8 +89,6 @@ class SA_coordinates(object):
             self.update_t()
 
 
-
-
 class SA_distances(object):
     def __init__(self, t0, D, max_time=5):
         self.t = t0
@@ -125,11 +122,10 @@ class SA_distances(object):
             print 'The coordinates are not 2D'
         else:
             route = self.intial_route if solution=='initial' else self.route
-
+            plt.figure()
             for i in range(self.n-1):
                 plt.plot([route[i][0], route[i+1][0]],[route[i][1], route[i+1][1]])
             plt.plot([route[self.n-1][0], route[0][0]],[route[self.n-1][1], route[0][1]])
-            plt.show()
 
 
     def random_swap(self):
