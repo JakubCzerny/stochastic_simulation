@@ -41,6 +41,7 @@ def box_muller(n, plot=False):
         plt.scatter(x,y,s=10, c='r')
         plt.show()
 
+        plot_cdf(x,'Normal',bins=int(n/10))
 
     mean_samples = np.mean(x)
     mean = 0
@@ -58,8 +59,11 @@ def box_muller(n, plot=False):
     return [x,y]
 
 def pareto(beta, k, n, plot=False):
-    x = np.array([beta*(math.pow(random.random(), (-1/k))) for i in range(n)])
-    x = x[np.where(x>beta)]
+    x = []
+    while len(x) < n:
+        val = beta*(math.pow(random.random(), (-1/k)))
+        if val > beta:
+            x.append(val)
 
     if plot:
         name = '[Pareto] beta:',beta, ' k:',k
