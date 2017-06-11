@@ -1,8 +1,9 @@
-from continous_distributions import exponential, box_muller, pareto
+from continous_distributions import exponential, box_muller, pareto, normal
 
 rate = 4
 n = 10000
 
+mean_ci, var_ci = normal(10, alpha=0.05, reps=100, plot=False)
 box_muller(n,True)
 exponential(rate, n,True)
 
