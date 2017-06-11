@@ -25,6 +25,39 @@ def exponential(rate,n,plot=False):
     return x
 
 
+def normal(n, alpha=0.05, reps=1, plot=False):
+    mean = 0
+    var = 1
+
+    ci_m = [0,0]
+    ci_v = [0,0]
+
+    for i in range(reps):
+        x,_ = box_muller(n)
+        mean_samples = np.mean(x)
+        variance_samples = np.var(x)
+
+        if plot:
+            plot_cdf(x,'Normal',bins=int(n))
+
+        ci = stats.t.interval(1-alpha, n-1, mean_samples, stats.sem(x))
+        ci_m[0] += ci[0]
+        ci_m[1] += ci[1]
+        print 'Mean: ',ci[0],'<',mean_samples,'<',ci[1]," true mean:",mean
+
+        numerator = (n-1) * variance_samples
+        ci = [numerator / stats.chi2.isf(q=alpha/2, df=n-1), numerator / stats.chi2.isf(q=1-alpha/2, df=n-1)]
+
+        ci_v[0] += ci[0]
+        ci_v[1] += ci[1]
+        print 'Variance: ', ci[0],'<',variance_samples,'<',ci[1], " true variance:",var,'\n'
+
+    ci_m = np.array(ci_m) / reps
+    ci_v = np.array(ci_v) / reps
+
+    return [ci_m, ci_v]
+
+
 def box_muller(n, plot=False):
     x = []
     y = []
@@ -41,29 +74,10 @@ def box_muller(n, plot=False):
         plt.scatter(x,y,s=10, c='r')
         plt.show()
 
-        plot_cdf(x,'Normal',bins=int(n/10))
-
-    mean_samples = np.mean(x)
-    mean = 0
-    var = 1
-    alpha = 0.05
-    print "Alpha: ", str(alpha)
-
-    conf_int = stats.t.interval(alpha, n-1, mean_samples, 1)
-    print 'Mean: ',conf_int[0],'<',mean_samples,'<',conf_int[1]," true mean:",mean
-
-    variance_samples = np.var(x)
-    conf_int = stats.t.interval(alpha, n-1, variance_samples, 1)
-    print 'Variance: ', conf_int[0],'<',variance_samples,'<',conf_int[1], " true variance:",var,'\n'
-
     return [x,y]
 
 def pareto(beta, k, n, plot=False):
-    x = []
-    while len(x) < n:
-        val = beta*(math.pow(random.random(), (-1/k)))
-        if val > beta:
-            x.append(val)
+    x = [beta*(math.pow(random.random(), (-1/k))) for i in range(n)]
 
     if plot:
         name = '[Pareto] beta:',beta, ' k:',k
