@@ -25,22 +25,6 @@ def exponential(rate,n,plot=False):
     return x
 
 
-def normal(mean, var, n, plot=False):
-    std = math.sqrt(var)
-    x = [(mean + std * random.random()) for i in range(n)]
-
-    if plot:
-        plot_cdf(x, 'normal', int(n/10))
-
-    mean_samples = np.mean(x)
-    print 'Mean: ', mean_samples," true mean:",mean
-
-    variance_samples = np.var(x)
-    print 'Variance: ', variance_samples, " true variance:",var,'\n'
-
-    return x
-
-
 def box_muller(n, plot=False):
     x = []
     y = []
