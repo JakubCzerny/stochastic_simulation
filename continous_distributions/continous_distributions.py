@@ -29,8 +29,8 @@ def normal(n, alpha=0.05, reps=1, plot=False):
     mean = 0
     var = 1
 
-    ci_m = [0,0]
-    ci_v = [0,0]
+    ci_m = [[],[]]
+    ci_v = [[],[]]
 
     for i in range(reps):
         x,_ = box_muller(n)
@@ -41,19 +41,16 @@ def normal(n, alpha=0.05, reps=1, plot=False):
             plot_cdf(x,'Normal',bins=int(n))
 
         ci = stats.t.interval(1-alpha, n-1, mean_samples, stats.sem(x))
-        ci_m[0] += ci[0]
-        ci_m[1] += ci[1]
+        ci_m[0].append(ci[0])
+        ci_m[1].append(ci[1])
         print 'Mean: ',ci[0],'<',mean_samples,'<',ci[1]," true mean:",mean
 
         numerator = (n-1) * variance_samples
         ci = [numerator / stats.chi2.isf(q=alpha/2, df=n-1), numerator / stats.chi2.isf(q=1-alpha/2, df=n-1)]
 
-        ci_v[0] += ci[0]
-        ci_v[1] += ci[1]
+        ci_v[0].append(ci[0])
+        ci_v[1].append(ci[1])
         print 'Variance: ', ci[0],'<',variance_samples,'<',ci[1], " true variance:",var,'\n'
-
-    ci_m = np.array(ci_m) / reps
-    ci_v = np.array(ci_v) / reps
 
     return [ci_m, ci_v]
 
